@@ -22,6 +22,9 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
+  FunnelChart,
+  Funnel,
+  Treemap,
 } from "recharts";
 
 const data = [
@@ -33,12 +36,14 @@ const data = [
   { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
   { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
 ];
+
 const piedata = [
   { name: "Group A", value: 400 },
   { name: "Group B", value: 300 },
   { name: "Group C", value: 300 },
   { name: "Group D", value: 200 },
 ];
+
 const radardata = [
   { name: "A", x: 21 },
   { name: "B", x: 22 },
@@ -50,6 +55,7 @@ const radardata = [
   { name: "H", x: -8 },
   { name: "I", x: 9 },
 ];
+
 const scatterdata = [
   { x: 1, y: 23 },
   { x: 2, y: 3 },
@@ -61,7 +67,49 @@ const scatterdata = [
   { x: 8, y: 32 },
   { x: 9, y: 43 },
 ];
+
+const funneldata = [
+  { name: "Impressions", value: 2000 },
+  { name: "Clicks", value: 1500 },
+  { name: "Visits", value: 1000 },
+  { name: "Orders", value: 800 },
+  { name: "Revenue", value: 600 },
+];
+
+const treemapdata = [
+  {
+    name: "A",
+    children: [
+      { name: "A1", size: 100 },
+      { name: "A2", size: 200 },
+      { name: "A3", size: 300 },
+    ],
+  },
+  {
+    name: "B",
+    children: [
+      { name: "B1", size: 100 },
+      { name: "B2", size: 200 },
+    ],
+  },
+  {
+    name: "C",
+    children: [{ name: "C1", size: 100 }],
+  },
+  {
+    name: "D",
+    children: [
+      { name: "D1", size: 100 },
+      { name: "D2", size: 200 },
+      { name: "D3", size: 300 },
+      { name: "D4", size: 400 },
+    ],
+  },
+];
+
+
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
 
 const App = () => {
   return (
@@ -160,6 +208,34 @@ const App = () => {
           <Bar dataKey="pv" barSize={20} fill="#413ea0" />
           <Line type="monotone" dataKey="uv" stroke="#ff7300" />
         </ComposedChart>
+      </div>
+      <div>
+        <h2>Funnel Chart</h2>
+        <FunnelChart width={400} height={400}>
+          <Tooltip />
+          <Funnel dataKey="value" data={funneldata} isAnimationActive={false}>
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Funnel>
+        </FunnelChart>
+      </div>
+      <div>
+        <h2>Treemap Chart</h2>
+        <Treemap
+          width={400}
+          height={400}
+          data={treemapdata}
+          dataKey="size"
+          ratio={4 / 3}
+          stroke="#fff"
+          fill="#8884d8"
+        >
+          <Tooltip />
+        </Treemap>
       </div>
     </div>
   );
